@@ -13,22 +13,24 @@ import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import { House, ListMusic } from 'lucide-react-native';
 import Svg, { Defs, RadialGradient, Rect, Stop } from 'react-native-svg';
 
+import { colors } from '@/constants/tokens';
+
 type Props = DrawerContentComponentProps;
 
 const { width } = Dimensions.get('screen');
 
 export function DrawerContent({ state, navigation }: Props) {
   const { index } = state;
-  const colorPlaylist = index === 1 ? '$white' : '#5b3d72';
-  const colorHome = index === 0 ? '$white' : '#5b3d72';
+  const colorPlaylist = index === 1 ? '$white' : colors.purple100;
+  const colorHome = index === 0 ? '$white' : colors.purple100;
 
   return (
     <Center flex={1} alignItems="flex-start" px="$4" gap="$3">
       <Svg height={width * 0.6} width={width * 0.6} style={styles.background}>
         <Defs>
           <RadialGradient id="grad" gradientUnits="userSpaceOnUse">
-            <Stop offset="0" stopColor="#5b3d72" />
-            <Stop offset="1" stopColor="#26073e" />
+            <Stop offset="0" stopColor={colors.purple100} />
+            <Stop offset="1" stopColor={colors.purple900} />
           </RadialGradient>
         </Defs>
         <Rect width="100%" height="100%" fill="url(#grad)" />
@@ -45,7 +47,7 @@ export function DrawerContent({ state, navigation }: Props) {
         mb="$4"
       />
       <VStack ml="$4" mb="$4">
-        <Text fontSize="$lg" color="#5b3d72" mb="$4">
+        <Text fontSize="$lg" color={colors.purple100} mb="$4">
           Olá!
         </Text>
         <Text fontSize="$4xl" color="$white">

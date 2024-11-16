@@ -4,6 +4,7 @@ import { Drawer } from 'expo-router/drawer';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { DrawerContent } from '@/components/DrawerContent';
+import { colors } from '@/constants/tokens';
 
 const { width } = Dimensions.get('screen');
 
@@ -16,11 +17,11 @@ export default function DrawerLayout() {
           headerShown: false,
           drawerActiveBackgroundColor: 'transparent',
           drawerStyle: {
-            backgroundColor: '#26073e',
+            backgroundColor: colors.purple900,
             width: width * 0.6,
           },
           sceneStyle: {
-            backgroundColor: '#26073e',
+            backgroundColor: colors.purple900,
           },
           overlayColor: 'transparent',
         }}
