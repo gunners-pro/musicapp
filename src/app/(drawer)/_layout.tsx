@@ -37,5 +37,6 @@ export default function DrawerLayout() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.purple900,
   },
 });

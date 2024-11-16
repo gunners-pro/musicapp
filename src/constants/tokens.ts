@@ -4,6 +4,7 @@ const colors = {
   white: '#fff',
   purple100: '#5b3d72',
   purple500: '#ad6af7',
+  purple500Hover: '#be87fa',
   purple900: '#26073e',
 };
 
