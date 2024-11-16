@@ -3,6 +3,8 @@ import { Dimensions, StyleSheet } from 'react-native';
 import { Drawer } from 'expo-router/drawer';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+import { DrawerContent } from '@/components/DrawerContent';
+
 const { width } = Dimensions.get('screen');
 
 export default function DrawerLayout() {
@@ -12,16 +14,17 @@ export default function DrawerLayout() {
         screenOptions={{
           drawerType: 'slide',
           headerShown: false,
-          drawerActiveBackgroundColor: 'yellow',
+          drawerActiveBackgroundColor: 'transparent',
           drawerStyle: {
-            backgroundColor: '#3a1d5c',
+            backgroundColor: '#26073e',
             width: width * 0.6,
           },
           sceneStyle: {
-            backgroundColor: '#3a1d5c',
+            backgroundColor: '#26073e',
           },
           overlayColor: 'transparent',
         }}
+        drawerContent={props => DrawerContent(props)}
       >
         <Drawer.Screen name="index" options={{ drawerLabel: 'Homepage' }} />
         <Drawer.Screen name="playlist" options={{ drawerLabel: 'Playlist' }} />

@@ -1,0 +1,102 @@
+import { Dimensions, StyleSheet } from 'react-native';
+
+import {
+  Button,
+  Center,
+  HStack,
+  Icon,
+  Image,
+  Text,
+  VStack,
+} from '@gluestack-ui/themed';
+import { DrawerContentComponentProps } from '@react-navigation/drawer';
+import { House, ListMusic } from 'lucide-react-native';
+import Svg, { Defs, RadialGradient, Rect, Stop } from 'react-native-svg';
+
+type Props = DrawerContentComponentProps;
+
+const { width } = Dimensions.get('screen');
+
+export function DrawerContent({ state, navigation }: Props) {
+  const { index } = state;
+  const colorPlaylist = index === 1 ? '$white' : '#5b3d72';
+  const colorHome = index === 0 ? '$white' : '#5b3d72';
+
+  return (
+    <Center flex={1} alignItems="flex-start" px="$4" gap="$3">
+      <Svg height={width * 0.6} width={width * 0.6} style={styles.background}>
+        <Defs>
+          <RadialGradient id="grad" gradientUnits="userSpaceOnUse">
+            <Stop offset="0" stopColor="#5b3d72" />
+            <Stop offset="1" stopColor="#26073e" />
+          </RadialGradient>
+        </Defs>
+        <Rect width="100%" height="100%" fill="url(#grad)" />
+      </Svg>
+      <Image
+        source={{
+          uri: 'https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg',
+        }}
+        alt="Profile"
+        w="$32"
+        h="$32"
+        borderRadius={44}
+        ml="$4"
+        mb="$4"
+      />
+      <VStack ml="$4" mb="$4">
+        <Text fontSize="$lg" color="#5b3d72" mb="$4">
+          Olá!
+        </Text>
+        <Text fontSize="$4xl" color="$white">
+          Seja bem {'\n'}vindo.
+        </Text>
+      </VStack>
+      <HStack w="$full" px="$4">
+        <Button
+          gap="$4"
+          onPress={() => navigation.navigate('index')}
+          bg="transparent"
+          borderWidth="$1"
+          borderColor="transparent"
+          $active={{
+            borderWidth: 1,
+            borderColor: '$white',
+          }}
+          justifyContent="flex-start"
+          w="$full"
+        >
+          <Icon as={House} color={colorHome} />
+          <Text color={colorHome}>Home</Text>
+        </Button>
+      </HStack>
+      <HStack w="$full" px="$4">
+        <Button
+          gap="$4"
+          onPress={() => navigation.navigate('playlist')}
+          bg="transparent"
+          borderWidth="$1"
+          borderColor="transparent"
+          $active={{
+            borderWidth: 1,
+            borderColor: '$white',
+          }}
+          justifyContent="flex-start"
+          w="$full"
+        >
+          <Icon as={ListMusic} color={colorPlaylist} />
+          <Text color={colorPlaylist}>Playlist</Text>
+        </Button>
+      </HStack>
+    </Center>
+  );
+}
+
+const styles = StyleSheet.create({
+  background: {
+    position: 'absolute',
+    left: -50,
+    top: -50,
+    opacity: 0.6,
+  },
+});
