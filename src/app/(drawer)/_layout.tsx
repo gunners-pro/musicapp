@@ -27,8 +27,8 @@ export default function DrawerLayout() {
         }}
         drawerContent={props => DrawerContent(props)}
       >
-        <Drawer.Screen name="index" options={{ drawerLabel: 'Homepage' }} />
-        <Drawer.Screen name="playlist" options={{ drawerLabel: 'Playlist' }} />
+        <Drawer.Screen name="index" />
+        <Drawer.Screen name="library" />
       </Drawer>
     </GestureHandlerRootView>
   );

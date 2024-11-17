@@ -10,7 +10,7 @@ import {
   VStack,
 } from '@gluestack-ui/themed';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
-import { House, ListMusic } from 'lucide-react-native';
+import { Library, ListMusic } from 'lucide-react-native';
 import Svg, { Defs, RadialGradient, Rect, Stop } from 'react-native-svg';
 
 import { colors } from '@/constants/tokens';
@@ -68,14 +68,14 @@ export function DrawerContent({ state, navigation }: Props) {
           justifyContent="flex-start"
           w="$full"
         >
-          <Icon as={House} color={colorHome} />
-          <Text color={colorHome}>Home</Text>
+          <Icon as={ListMusic} color={colorHome} />
+          <Text color={colorHome}>Playlist</Text>
         </Button>
       </HStack>
       <HStack w="$full" px="$4">
         <Button
           gap="$4"
-          onPress={() => navigation.navigate('playlist')}
+          onPress={() => navigation.navigate('library')}
           bg="transparent"
           borderWidth="$1"
           borderColor="transparent"
@@ -86,8 +86,8 @@ export function DrawerContent({ state, navigation }: Props) {
           justifyContent="flex-start"
           w="$full"
         >
-          <Icon as={ListMusic} color={colorPlaylist} />
-          <Text color={colorPlaylist}>Playlist</Text>
+          <Icon as={Library} color={colorPlaylist} />
+          <Text color={colorPlaylist}>Biblioteca</Text>
         </Button>
       </HStack>
     </Center>
