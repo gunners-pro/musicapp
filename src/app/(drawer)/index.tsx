@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, FlatList, StyleSheet } from 'react-native';
 
 import {
   Button,
@@ -13,6 +13,7 @@ import { AlignLeft, Search } from 'lucide-react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 
 import { DrawerWrapperAnimation } from '@/components/DrawerWrapperAnimation';
+import { PlaylistItem } from '@/components/PlaylistItem';
 import { colors } from '@/constants/tokens';
 
 const { height, width } = Dimensions.get('screen');
@@ -71,9 +72,31 @@ export default function Home() {
         borderTopLeftRadius={40}
         borderTopRightRadius={40}
         mt={-50}
-        py="$4"
-        px="$6"
-      />
+        py="$6"
+      >
+        <HStack
+          justifyContent="space-between"
+          alignItems="center"
+          mb="$6"
+          px="$6"
+        >
+          <Text fontSize="$xl" fontWeight="$bold" color={colors.purple900}>
+            Playlist
+          </Text>
+          <Text fontSize="$sm" color={colors.textLight}>
+            Ver mais
+          </Text>
+        </HStack>
+        <FlatList
+          data={[0, 1, 2, 3]}
+          keyExtractor={item => String(item)}
+          renderItem={() => <PlaylistItem />}
+          horizontal
+          style={styles.playlistStyle}
+          contentContainerStyle={styles.playlistContainerStyle}
+          showsHorizontalScrollIndicator={false}
+        />
+      </VStack>
     </DrawerWrapperAnimation>
   );
 }
@@ -86,5 +109,13 @@ const styles = StyleSheet.create({
     height: height / 4,
     width: width,
     zIndex: -1,
+  },
+  playlistStyle: {
+    flexGrow: 0,
+  },
+  playlistContainerStyle: {
+    marginLeft: 24,
+    paddingRight: 24,
+    paddingBottom: 12,
   },
 });
