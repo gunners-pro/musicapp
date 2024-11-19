@@ -4,6 +4,7 @@ import { Button, HStack, Icon, Text, VStack } from '@gluestack-ui/themed';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { AlignLeft } from 'lucide-react-native';
 
+import { AudioPlayerDocked } from '@/components/AudioPlayerDocked';
 import { DrawerWrapperAnimation } from '@/components/DrawerWrapperAnimation';
 import { MusicItemLibrary } from '@/components/MusicItemLibrary';
 import { colors } from '@/constants/tokens';
@@ -46,6 +47,7 @@ export default function Library() {
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={<Text>Nenhuma música encontrada</Text>}
         />
+        <AudioPlayerDocked />
       </VStack>
     </DrawerWrapperAnimation>
   );
