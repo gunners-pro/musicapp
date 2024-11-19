@@ -5,6 +5,8 @@ import { EllipsisVertical } from 'lucide-react-native';
 
 import { colors } from '@/constants/tokens';
 import { AudioFile } from '@/context/AudioFilesContext';
+import { convertSecondsToMinutes } from '@/utils/convertSecondsToMinutes';
+import { removeExtensionFromNameFile } from '@/utils/removeExtensionFromNameFile';
 
 type Props = {
   item: AudioFile;
@@ -29,10 +31,10 @@ export function MusicItemLibrary({ item }: Props) {
               numberOfLines={2}
               textAlign="justify"
             >
-              {item.filename}
+              {removeExtensionFromNameFile(item.filename)}
             </Text>
             <Text fontSize="$sm" color={colors.textLight}>
-              3:40
+              {convertSecondsToMinutes(item.duration)}
             </Text>
           </VStack>
         </HStack>
