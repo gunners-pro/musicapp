@@ -5,11 +5,12 @@ import { HStack, Image, Text, VStack } from '@gluestack-ui/themed';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 
 import { colors } from '@/constants/tokens';
+import { usePlayer } from '@/hooks/usePlayer';
 
 const { width } = Dimensions.get('screen');
 
 export function AudioPlayerDocked() {
-  const isPlaying = true;
+  const { isPlaying, currentSound } = usePlayer();
 
   return (
     <HStack
@@ -43,13 +44,8 @@ export function AudioPlayerDocked() {
         size="md"
       />
       <VStack flex={1} gap="$1" mx="$2">
-        <Text
-          fontSize="$lg"
-          color="$white"
-          numberOfLines={2}
-          textAlign="justify"
-        >
-          Badai Guys
+        <Text fontSize="$sm" color="$white" numberOfLines={2}>
+          {currentSound?.title.slice(0, -4)}
         </Text>
         <Text fontSize="$sm" color={colors.textLight}>
           Beling Alus

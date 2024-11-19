@@ -8,6 +8,7 @@ import { AudioPlayerDocked } from '@/components/AudioPlayerDocked';
 import { DrawerWrapperAnimation } from '@/components/DrawerWrapperAnimation';
 import { MusicItemLibrary } from '@/components/MusicItemLibrary';
 import { colors } from '@/constants/tokens';
+import { PlayerContextProvider } from '@/context/PlayerContext';
 import { useAudioFiles } from '@/hooks/useAudioFiles';
 
 export default function Library() {
@@ -38,16 +39,18 @@ export default function Library() {
           </Text>
         </HStack>
 
-        <FlatList
-          data={audioFiles}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => <MusicItemLibrary item={item} />}
-          contentContainerStyle={styles.contentContainer}
-          style={styles.containerList}
-          showsVerticalScrollIndicator={false}
-          ListEmptyComponent={<Text>Nenhuma música encontrada</Text>}
-        />
-        <AudioPlayerDocked />
+        <PlayerContextProvider>
+          <FlatList
+            data={audioFiles}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => <MusicItemLibrary item={item} />}
+            contentContainerStyle={styles.contentContainer}
+            style={styles.containerList}
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={<Text>Nenhuma música encontrada</Text>}
+          />
+          <AudioPlayerDocked />
+        </PlayerContextProvider>
       </VStack>
     </DrawerWrapperAnimation>
   );

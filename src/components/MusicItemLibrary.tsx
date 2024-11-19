@@ -5,6 +5,7 @@ import { EllipsisVertical } from 'lucide-react-native';
 
 import { colors } from '@/constants/tokens';
 import { AudioFile } from '@/context/AudioFilesContext';
+import { usePlayer } from '@/hooks/usePlayer';
 import { convertSecondsToMinutes } from '@/utils/convertSecondsToMinutes';
 import { removeExtensionFromNameFile } from '@/utils/removeExtensionFromNameFile';
 
@@ -13,9 +14,17 @@ type Props = {
 };
 
 export function MusicItemLibrary({ item }: Props) {
+  const { playSound, stopCurrentSound, currentPlayingId } = usePlayer();
+
+  async function handlePlayMusic() {
+    currentPlayingId === item.id
+      ? stopCurrentSound()
+      : playSound({ id: item.id, uri: item.uri, title: item.filename });
+  }
+
   return (
     <HStack mb="$5" justifyContent="space-between">
-      <TouchableOpacity style={styles.btnPlayAudio}>
+      <TouchableOpacity style={styles.btnPlayAudio} onPress={handlePlayMusic}>
         <HStack gap="$2" alignItems="center">
           <Image
             source={{
