@@ -7,9 +7,11 @@ import { AlignLeft } from 'lucide-react-native';
 import { DrawerWrapperAnimation } from '@/components/DrawerWrapperAnimation';
 import { MusicItemLibrary } from '@/components/MusicItemLibrary';
 import { colors } from '@/constants/tokens';
+import { useAudioFiles } from '@/hooks/useAudioFiles';
 
-export default function Playlist() {
+export default function Library() {
   const navigation = useNavigation();
+  const { audioFiles } = useAudioFiles();
 
   function ToggleDrawer() {
     navigation.dispatch(DrawerActions.toggleDrawer());
@@ -36,11 +38,13 @@ export default function Playlist() {
         </HStack>
 
         <FlatList
-          data={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-          renderItem={() => <MusicItemLibrary />}
+          data={audioFiles}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => <MusicItemLibrary item={item} />}
           contentContainerStyle={styles.contentContainer}
           style={styles.containerList}
           showsVerticalScrollIndicator={false}
+          ListEmptyComponent={<Text>Nenhuma música encontrada</Text>}
         />
       </VStack>
     </DrawerWrapperAnimation>

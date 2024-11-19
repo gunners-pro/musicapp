@@ -1,15 +1,20 @@
-import { TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import { HStack, Icon, Image, Text, VStack } from '@gluestack-ui/themed';
 import { EllipsisVertical } from 'lucide-react-native';
 
 import { colors } from '@/constants/tokens';
+import { AudioFile } from '@/context/AudioFilesContext';
 
-export function MusicItemLibrary() {
+type Props = {
+  item: AudioFile;
+};
+
+export function MusicItemLibrary({ item }: Props) {
   return (
     <HStack mb="$5" justifyContent="space-between">
-      <TouchableOpacity>
-        <HStack gap="$4" alignItems="center">
+      <TouchableOpacity style={styles.btnPlayAudio}>
+        <HStack gap="$2" alignItems="center">
           <Image
             source={{
               uri: 'https://images.pexels.com/photos/147411/italy-mountains-dawn-daybreak-147411.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
@@ -17,24 +22,33 @@ export function MusicItemLibrary() {
             alt="album"
             borderRadius={20}
           />
-          <VStack gap="$1">
-            <Text fontWeight="$black" fontSize="$lg" color={colors.purple900}>
-              Balonku Ada 5 Meter
+          <VStack flex={1} gap="$1" mx="$2">
+            <Text
+              fontSize="$md"
+              color={colors.purple900}
+              numberOfLines={2}
+              textAlign="justify"
+            >
+              {item.filename}
             </Text>
             <Text fontSize="$sm" color={colors.textLight}>
-              Mamank . Popular Song
+              3:40
             </Text>
           </VStack>
         </HStack>
       </TouchableOpacity>
-      <HStack alignItems="center" gap="$3">
-        <Text fontSize="$sm" color={colors.textLight}>
-          3:49
-        </Text>
-        <TouchableOpacity>
-          <Icon as={EllipsisVertical} size="lg" />
-        </TouchableOpacity>
-      </HStack>
+      <TouchableOpacity style={styles.btnDots}>
+        <Icon as={EllipsisVertical} size="lg" />
+      </TouchableOpacity>
     </HStack>
   );
 }
+
+const styles = StyleSheet.create({
+  btnPlayAudio: {
+    flex: 1,
+  },
+  btnDots: {
+    justifyContent: 'center',
+  },
+});
