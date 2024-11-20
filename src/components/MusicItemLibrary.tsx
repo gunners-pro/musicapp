@@ -14,11 +14,12 @@ type Props = {
 };
 
 export function MusicItemLibrary({ item }: Props) {
-  const { playSound, stopCurrentSound, currentPlayingId } = usePlayer();
+  const { playSound, checkPlayPauseCurrentSound, currentPlayingId } =
+    usePlayer();
 
   async function handlePlayMusic() {
     currentPlayingId === item.id
-      ? stopCurrentSound()
+      ? checkPlayPauseCurrentSound()
       : playSound({ id: item.id, uri: item.uri, title: item.filename });
   }
 

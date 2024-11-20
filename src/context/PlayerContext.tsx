@@ -1,13 +1,20 @@
-import { createContext, ReactNode, useState } from 'react';
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useState,
+} from 'react';
 
-import { Audio } from 'expo-av';
+import { Audio, AVPlaybackStatusSuccess } from 'expo-av';
 
 type PlayerContextData = {
   currentSound: CurrentSoundData | null;
   playSound: (data: PlaySoundData) => Promise<void>;
-  stopCurrentSound: () => Promise<void>;
+  checkPlayPauseCurrentSound: () => Promise<void>;
   currentPlayingId: string | null;
   isPlaying: boolean;
+  setIsPlaying: Dispatch<SetStateAction<boolean>>;
 };
 
 export const PlayerContext = createContext<PlayerContextData>(
@@ -63,13 +70,17 @@ export function PlayerContextProvider({ children }: Props) {
     });
   }
 
-  async function stopCurrentSound() {
+  async function checkPlayPauseCurrentSound() {
     if (currentSound) {
-      await currentSound.sound.stopAsync();
-      await currentSound.sound.unloadAsync();
-      setCurrentSound(null);
-      setCurrentPlayingId(null);
-      setIsPlaying(false);
+      const status =
+        (await currentSound.sound.getStatusAsync()) as AVPlaybackStatusSuccess;
+      if (status.isPlaying) {
+        setIsPlaying(false);
+        await currentSound.sound.pauseAsync();
+      } else {
+        setIsPlaying(true);
+        await currentSound.sound.playAsync();
+      }
     }
   }
 
@@ -78,9 +89,10 @@ export function PlayerContextProvider({ children }: Props) {
       value={{
         currentSound,
         playSound,
-        stopCurrentSound,
+        checkPlayPauseCurrentSound,
         currentPlayingId,
         isPlaying,
+        setIsPlaying,
       }}
     >
       {children}

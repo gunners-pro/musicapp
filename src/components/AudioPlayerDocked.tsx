@@ -2,6 +2,7 @@ import { Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { Entypo } from '@expo/vector-icons';
 import { HStack, Image, Text, VStack } from '@gluestack-ui/themed';
+import { AVPlaybackStatusSuccess } from 'expo-av';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 
 import { colors } from '@/constants/tokens';
@@ -10,7 +11,19 @@ import { usePlayer } from '@/hooks/usePlayer';
 const { width } = Dimensions.get('screen');
 
 export function AudioPlayerDocked() {
-  const { isPlaying, currentSound } = usePlayer();
+  const { isPlaying, setIsPlaying, currentSound } = usePlayer();
+
+  async function handlePLayPause() {
+    const status =
+      (await currentSound?.sound.getStatusAsync()) as AVPlaybackStatusSuccess;
+    if (status.isPlaying) {
+      setIsPlaying(false);
+      currentSound?.sound.pauseAsync();
+    } else {
+      setIsPlaying(true);
+      currentSound?.sound.playAsync();
+    }
+  }
 
   return (
     <HStack
@@ -51,22 +64,23 @@ export function AudioPlayerDocked() {
           Beling Alus
         </Text>
       </VStack>
-      <VStack
-        bg="$white"
-        alignItems="center"
-        justifyContent="center"
-        rounded="$full"
-        w="$10"
-        h="$10"
-      >
-        <TouchableOpacity>
+
+      <TouchableOpacity onPress={handlePLayPause}>
+        <VStack
+          bg="$white"
+          alignItems="center"
+          justifyContent="center"
+          rounded="$full"
+          w="$10"
+          h="$10"
+        >
           <Entypo
             name={isPlaying ? 'controller-paus' : 'controller-play'}
             color={colors.purple500}
             size={22}
           />
-        </TouchableOpacity>
-      </VStack>
+        </VStack>
+      </TouchableOpacity>
     </HStack>
   );
 }
