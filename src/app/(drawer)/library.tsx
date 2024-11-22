@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StatusBar, StyleSheet } from 'react-native';
 
 import { Button, HStack, Icon, Text, VStack } from '@gluestack-ui/themed';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
@@ -21,7 +21,7 @@ export default function Library() {
 
   return (
     <DrawerWrapperAnimation>
-      <VStack flex={1} bg="$white" p="$2">
+      <VStack flex={1} bg="$white" p="$2" pt={StatusBar.currentHeight}>
         <HStack alignItems="center">
           <Button
             size="xl"

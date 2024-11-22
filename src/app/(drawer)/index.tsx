@@ -1,4 +1,4 @@
-import { Dimensions, FlatList, StyleSheet } from 'react-native';
+import { Dimensions, FlatList, StatusBar, StyleSheet } from 'react-native';
 
 import {
   Button,
@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
     <DrawerWrapperAnimation>
-      <VStack p="$2" h={height / 4}>
+      <VStack p="$2" h={height / 4} pt={StatusBar.currentHeight}>
         <HStack justifyContent="space-between">
           <Button
             size="xl"
