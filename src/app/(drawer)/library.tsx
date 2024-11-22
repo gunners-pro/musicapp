@@ -40,15 +40,17 @@ export default function Library() {
         </HStack>
 
         <PlayerContextProvider>
-          <FlatList
-            data={audioFiles}
-            keyExtractor={item => item.id}
-            renderItem={({ item }) => <MusicItemLibrary item={item} />}
-            contentContainerStyle={styles.contentContainer}
-            style={styles.containerList}
-            showsVerticalScrollIndicator={false}
-            ListEmptyComponent={<Text>Nenhuma música encontrada</Text>}
-          />
+          <VStack flex={1}>
+            <FlatList
+              data={audioFiles}
+              keyExtractor={item => item.id}
+              renderItem={({ item }) => <MusicItemLibrary item={item} />}
+              contentContainerStyle={styles.contentContainer}
+              style={styles.containerList}
+              showsVerticalScrollIndicator={false}
+              ListEmptyComponent={<Text>Nenhuma música encontrada</Text>}
+            />
+          </VStack>
           <AudioPlayerDocked />
         </PlayerContextProvider>
       </VStack>
@@ -60,8 +62,10 @@ const styles = StyleSheet.create({
   contentContainer: {
     marginHorizontal: 12,
     marginBottom: 12,
+    paddingBottom: 166,
   },
   containerList: {
+    flex: 1,
     paddingTop: 12,
   },
 });

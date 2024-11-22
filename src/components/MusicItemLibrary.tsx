@@ -1,6 +1,8 @@
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
-import { HStack, Icon, Image, Text, VStack } from '@gluestack-ui/themed';
+import { Entypo } from '@expo/vector-icons';
+import { Center, HStack, Icon, Text, VStack } from '@gluestack-ui/themed';
+import LottieView from 'lottie-react-native';
 import { EllipsisVertical } from 'lucide-react-native';
 
 import { colors } from '@/constants/tokens';
@@ -14,10 +16,24 @@ type Props = {
 };
 
 export function MusicItemLibrary({ item }: Props) {
-  const { playSound, checkPlayPauseCurrentSound, currentPlayingId } =
-    usePlayer();
+  const {
+    isPlaying,
+    playSound,
+    checkPlayPauseCurrentSound,
+    currentPlayingId,
+    animationLottieWave,
+    animationLottieWave2,
+  } = usePlayer();
 
   async function handlePlayMusic() {
+    if (isPlaying) {
+      animationLottieWave.current?.pause();
+      animationLottieWave2.current?.pause();
+    } else {
+      animationLottieWave.current?.play();
+      animationLottieWave2.current?.play();
+    }
+
     currentPlayingId === item.id
       ? checkPlayPauseCurrentSound()
       : playSound({ id: item.id, uri: item.uri, title: item.filename });
@@ -27,13 +43,25 @@ export function MusicItemLibrary({ item }: Props) {
     <HStack mb="$5" justifyContent="space-between">
       <TouchableOpacity style={styles.btnPlayAudio} onPress={handlePlayMusic}>
         <HStack gap="$2" alignItems="center">
-          <Image
-            source={{
-              uri: 'https://images.pexels.com/photos/147411/italy-mountains-dawn-daybreak-147411.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-            }}
-            alt="album"
+          <VStack
+            w="$16"
+            h="$16"
+            bg={colors.purple900}
             borderRadius={20}
-          />
+            justifyContent="center"
+          >
+            <Center>
+              {currentPlayingId === item.id ? (
+                <LottieView
+                  ref={animationLottieWave2}
+                  style={styles.lottieView}
+                  source={require('@/assets/lottie/music_wave.json')}
+                />
+              ) : (
+                <Entypo name="controller-play" color="#fff" size={32} />
+              )}
+            </Center>
+          </VStack>
           <VStack flex={1} gap="$1" mx="$2">
             <Text
               fontSize="$md"
@@ -62,5 +90,9 @@ const styles = StyleSheet.create({
   },
   btnDots: {
     justifyContent: 'center',
+  },
+  lottieView: {
+    width: 65,
+    height: 65,
   },
 });

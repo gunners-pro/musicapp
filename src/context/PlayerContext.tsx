@@ -2,11 +2,14 @@ import {
   createContext,
   Dispatch,
   ReactNode,
+  RefObject,
   SetStateAction,
+  useRef,
   useState,
 } from 'react';
 
 import { Audio, AVPlaybackStatusSuccess } from 'expo-av';
+import LottieView from 'lottie-react-native';
 
 type PlayerContextData = {
   currentSound: CurrentSoundData | null;
@@ -15,6 +18,8 @@ type PlayerContextData = {
   currentPlayingId: string | null;
   isPlaying: boolean;
   setIsPlaying: Dispatch<SetStateAction<boolean>>;
+  animationLottieWave: RefObject<LottieView>;
+  animationLottieWave2: RefObject<LottieView>;
 };
 
 export const PlayerContext = createContext<PlayerContextData>(
@@ -42,6 +47,8 @@ export function PlayerContextProvider({ children }: Props) {
   );
   const [currentPlayingId, setCurrentPlayingId] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const animationLottieWave = useRef<LottieView>(null);
+  const animationLottieWave2 = useRef<LottieView>(null);
 
   async function playSound({ id, uri, title }: PlaySoundData) {
     if (currentSound) {
@@ -93,6 +100,8 @@ export function PlayerContextProvider({ children }: Props) {
         currentPlayingId,
         isPlaying,
         setIsPlaying,
+        animationLottieWave,
+        animationLottieWave2,
       }}
     >
       {children}

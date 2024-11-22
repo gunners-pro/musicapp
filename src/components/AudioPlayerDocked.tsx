@@ -1,8 +1,9 @@
 import { Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { Entypo } from '@expo/vector-icons';
-import { HStack, Image, Text, VStack } from '@gluestack-ui/themed';
+import { HStack, Text, VStack } from '@gluestack-ui/themed';
 import { AVPlaybackStatusSuccess } from 'expo-av';
+import LottieView from 'lottie-react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 
 import { colors } from '@/constants/tokens';
@@ -11,17 +12,20 @@ import { usePlayer } from '@/hooks/usePlayer';
 const { width } = Dimensions.get('screen');
 
 export function AudioPlayerDocked() {
-  const { isPlaying, setIsPlaying, currentSound } = usePlayer();
+  const { isPlaying, setIsPlaying, currentSound, animationLottieWave } =
+    usePlayer();
 
   async function handlePLayPause() {
     const status =
       (await currentSound?.sound.getStatusAsync()) as AVPlaybackStatusSuccess;
     if (status.isPlaying) {
-      setIsPlaying(false);
+      animationLottieWave.current?.pause();
       currentSound?.sound.pauseAsync();
+      setIsPlaying(false);
     } else {
-      setIsPlaying(true);
       currentSound?.sound.playAsync();
+      animationLottieWave.current?.play();
+      setIsPlaying(true);
     }
   }
 
@@ -31,10 +35,11 @@ export function AudioPlayerDocked() {
       borderRadius={20}
       m="$4"
       p="$3"
+      h={100}
       alignItems="center"
       overflow="hidden"
       position="absolute"
-      bottom="$0"
+      bottom="$12"
       right="$0"
       left="$0"
     >
@@ -48,14 +53,13 @@ export function AudioPlayerDocked() {
         <Rect width="100%" height="100%" fill="url(#grad)" />
       </Svg>
 
-      <Image
-        source={{
-          uri: 'https://images.pexels.com/photos/147411/italy-mountains-dawn-daybreak-147411.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-        }}
-        alt="album"
-        borderRadius={20}
-        size="md"
-      />
+      <VStack borderWidth="$1" borderColor="$white" borderRadius={20}>
+        <LottieView
+          ref={animationLottieWave}
+          style={styles.lottieView}
+          source={require('@/assets/lottie/music_wave.json')}
+        />
+      </VStack>
       <VStack flex={1} gap="$1" mx="$2">
         <Text fontSize="$sm" color="$white" numberOfLines={2}>
           {currentSound?.title.slice(0, -4)}
@@ -91,7 +95,11 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
-    height: '130%',
+    height: 100,
     width: width,
+  },
+  lottieView: {
+    width: 65,
+    height: 65,
   },
 });
